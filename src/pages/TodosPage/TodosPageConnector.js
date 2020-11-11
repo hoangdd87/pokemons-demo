@@ -21,19 +21,17 @@ const TodosPageConnector = () => {
        setTodos(response.data);
        setIsLoadingTodos(false);
     }).catch(err => {
-      if(axios.isCancel(err)) return;
-      setIsLoadingTodos(false);
+      if(!axios.isCancel(err)) {
+        setIsLoadingTodos(false);
+      }
       console.error(err);
     })
 
     /* clear all effects */
     return () => {
       cancelRequest();
-      if (delay) {
-        clearTimeout(delay);
-      }
     }
-  }, [page, perPage]);
+  }, []);
 
   return (
     <TodosPage

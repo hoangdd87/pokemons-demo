@@ -15,7 +15,6 @@ const PokemonsPageConnector = () => {
   useEffect(() => {
     let cancelRequest = null;
     let delay = null;
-    let didCancel = false;
     setIsLoadingPokemons(true);
 
     axios({
@@ -37,7 +36,7 @@ const PokemonsPageConnector = () => {
         setPokemons(results);
       }, 1500)
     }).catch(err => {
-      if(!didCancel) {
+      if(!axios.isCancel(err)) {
         setIsLoadingPokemons(false);
       }
       console.error(err);
@@ -45,7 +44,6 @@ const PokemonsPageConnector = () => {
 
     /* clear all effects */
     return () => {
-      didCancel = true;
       cancelRequest();
       if (delay) {
         clearTimeout(delay);
