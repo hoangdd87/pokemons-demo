@@ -1,0 +1,6 @@
+.navbar {
+    display: flex;
+}
+.navbar > .link {
+    margin: 15px;
+}
