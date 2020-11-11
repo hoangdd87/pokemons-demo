@@ -1,3 +1,4 @@
+import React from 'react';
 import { PER_PAGE_OPTIONS } from "../../helpers/usePagePagination/usePagePaginationConsts";
 import './TablePagePagination.css';
 

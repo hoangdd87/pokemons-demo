@@ -1,1 +1,0 @@
-export const PER_PAGE_OPTIONS = [20, 40, 80];
