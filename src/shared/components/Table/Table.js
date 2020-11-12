@@ -35,4 +35,4 @@ const Table = ({ rows, columns, isLoading }) => {
   );
 };
 
-export default Table;
+export default React.memo(Table);

@@ -17,22 +17,26 @@ const columns = [
 ];
 
 const PokemonsPage = ({ pagePagination, pokemons, isLoadingPokemons }) => {
+  const [inputValue, setInputValue] = useState('');
   const [textSearch, setTextSearch] = useState('');
+  
   const rows = useMemo(() => pokemons.map(pokemon => ({
     id: pokemon.name,
     name: pokemon.name,
     url: pokemon.url
   })), [pokemons]);
-  const [rowsFiltered, setRowsFiltered] = useState(rows);
-
+  
+  const rowsFiltered = useMemo(() =>
+    rows.filter(row => row.name.toLowerCase().includes(textSearch.toLowerCase())), [rows, textSearch]);
+  
   useEffect(() => {
-    const delay = setTimeout(() => {
-      setRowsFiltered(rows.filter(row => row.name.toLowerCase().includes(textSearch.toLowerCase())));
+    const  delay = setTimeout(() => {
+        setTextSearch(inputValue)
     }, 250);
     return () => {
       clearTimeout(delay);
     }
-  }, [rows, textSearch]);
+  }, [inputValue]);
 
   return (
     <div>
@@ -41,8 +45,8 @@ const PokemonsPage = ({ pagePagination, pokemons, isLoadingPokemons }) => {
       />
       <input
         placeholder="Filter on the current page..."
-        value={ textSearch }
-        onChange={ evt => setTextSearch(evt.target.value) }
+        value={ inputValue }
+        onChange={ evt => setInputValue(evt.target.value) }
       />
       <Table
         rows={ rowsFiltered }

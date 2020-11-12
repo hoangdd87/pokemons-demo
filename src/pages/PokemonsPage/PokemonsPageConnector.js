@@ -29,11 +29,11 @@ const PokemonsPageConnector = () => {
       })
     })
       .then(response => {
-      const { count, results } = response.data;
       delay = setTimeout(() => {
+        const { count, results } = response.data;
         setIsLoadingPokemons(false);
         setPokemonsCount(count);
-        setPokemons(results);
+        setPokemons([...results]);
       }, 1500)
     }).catch(err => {
       if(!axios.isCancel(err)) {
@@ -50,7 +50,7 @@ const PokemonsPageConnector = () => {
       }
     }
   }, [page, perPage]);
-
+  
   return (
     <PokemonsPage
       key={ page }
