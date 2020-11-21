@@ -1,5 +1,6 @@
 import React from 'react';
 import './Table.css';
+import PropTypes from 'prop-types';
 
 const Table = ({ rows, columns, isLoading }) => {
   return (
@@ -34,5 +35,21 @@ const Table = ({ rows, columns, isLoading }) => {
     </div>
   );
 };
+
+Table.propTypes = {
+  rows: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  })),
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    render: PropTypes.func.isRequired
+  })),
+  isLoading: PropTypes.bool
+}
+
+Table.defaultProps = {
+  isLoading: false
+}
 
 export default React.memo(Table);

@@ -39,7 +39,6 @@ const EditTodoPageConnector = () => {
       isLoading={ isLoading }
       
     >
-    
     </TodoForm>
   );
 };

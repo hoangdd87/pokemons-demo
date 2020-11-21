@@ -5,6 +5,7 @@ import './TodosPage.css';
 import usePagePagination from '../../shared/helpers/usePagePagination/usePagePagination';
 import { FIRST_PAGE } from '../../shared/helpers/usePagePagination/usePagePaginationConsts';
 import HighLightSearchText from '../../shared/components/HightLightSearchText/HighLightSearchText';
+import PropTypes from 'prop-types';
 
 const getStatus = completed => completed ? 'Completed' : 'Open';
 const getColumns = (searchText, editAction) => [
@@ -53,21 +54,38 @@ const TodosPage = ({ todos, isLoadingTodos, gotoAddNewTodo, gotoEditTodo }) => {
         || getStatus(completed).toLowerCase().includes(textSearch.toLowerCase())
     }
   ), [todos, textSearch]);
-  const pagePagination = usePagePagination(rowsFiltered.length);
-  const { page, perPage, handleDirectPageChange } = pagePagination;
+  const {
+    page,
+    perPage,
+    gotoPrevPage,
+    gotoNextPage,
+    totalPages,
+    changePerPage,
+    changePage,
+    gotoLast,
+    gotoFirst,
+  } = usePagePagination(rowsFiltered.length);
   const rowsPaged = useMemo(() => rowsFiltered.slice((page-1) * perPage, (page-1) * perPage + perPage), [rowsFiltered, page, perPage]);
   const columns = useMemo(() => getColumns(textSearch, gotoEditTodo), [textSearch, gotoEditTodo]);
   return (
     <div>
       <TablePagePagination
-        pagePagination={ pagePagination }
+          page = { page }
+          perPage = { perPage }
+          handleNextPage = { gotoNextPage }
+          handlePrevPage={ gotoPrevPage }
+          totalPages = { totalPages }
+          handlePerPageChanged= { changePerPage }
+          handleDirectPageChange={ changePage }
+          handleGotoLast={ gotoLast }
+          handleGotoFirst={ gotoFirst }
       />
       <input
         placeholder="Filter by id or title or status..."
         value={ textSearch }
         onChange={ evt => {
           setTextSearch(evt.target.value);
-          handleDirectPageChange(FIRST_PAGE);
+          changePage(FIRST_PAGE);
         } }
       />
       <button onClick={ gotoAddNewTodo }>Add new</button>
@@ -80,4 +98,16 @@ const TodosPage = ({ todos, isLoadingTodos, gotoAddNewTodo, gotoEditTodo }) => {
   );
 };
 
-export default React.memo(TodosPage);
+TodosPage.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.shape({
+    userId: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired
+  })),
+  isLoadingTodos: PropTypes.bool.isRequired,
+  gotoAddNewTodo: PropTypes.func.isRequired,
+  gotoEditTodo: PropTypes.func.isRequired
+}
+
+export default TodosPage;

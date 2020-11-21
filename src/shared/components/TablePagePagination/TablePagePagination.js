@@ -1,9 +1,9 @@
 import React from 'react';
-import { PER_PAGE_OPTIONS } from "../../helpers/usePagePagination/usePagePaginationConsts";
+import {PER_PAGE_OPTIONS} from '../../helpers/usePagePagination/usePagePaginationConsts';
 import './TablePagePagination.css';
+import { TablePagePaginationPropTypes } from './tablePagePaginationHelpers';
 
-const TablePagePagination = ({ pagePagination }) => {
-  const {
+const TablePagePagination = ({
     page,
     perPage,
     handlePrevPage,
@@ -13,53 +13,55 @@ const TablePagePagination = ({ pagePagination }) => {
     handleGotoLast,
     handleGotoFirst,
     totalPages
-  } = pagePagination;
+  }) => {
 
   const pages = Array.from(Array(totalPages).keys())
   return (
     <div>
       <div>
-        <button onClick={ handleGotoFirst }>
-          { `<<` }
+        <button onClick={handleGotoFirst}>
+          {`<<`}
         </button>
-        <button onClick={ handlePrevPage }>
-          { `<` }
+        <button onClick={handlePrevPage}>
+          {`<`}
         </button>
         {
           pages.map(pageIndex => (
             <button
-              key={ pageIndex }
-              className={ page === pageIndex + 1 ? 'page_active' : '' }
-              onClick={ () => handleDirectPageChange(pageIndex + 1) }
+              key={pageIndex}
+              className={page === pageIndex + 1 ? 'page_active' : ''}
+              onClick={() => handleDirectPageChange(pageIndex + 1)}
             >
-              { pageIndex + 1 }
+              {pageIndex + 1}
             </button>
           ))
         }
-        <button onClick={ handleNextPage }>
-          { `>` }
+        <button onClick={handleNextPage}>
+          {`>`}
         </button>
-        <button onClick={ handleGotoLast }>
-          { `>>` }
+        <button onClick={handleGotoLast}>
+          {`>>`}
         </button>
       </div>
       <select
-        value={ perPage }
-        onChange={ evt => {
+        value={perPage}
+        onChange={evt => {
           handlePerPageChanged(evt.target.value)
-        } }
+        }}
       >
-        { PER_PAGE_OPTIONS.map(perPageOption => (
+        {PER_PAGE_OPTIONS.map(perPageOption => (
           <option
-            value={ perPageOption }
-            key={ perPageOption }
+            value={perPageOption}
+            key={perPageOption}
           >
-            { perPageOption }
+            {perPageOption}
           </option>
-        )) }
+        ))}
       </select>
     </div>
   );
 };
+
+TablePagePagination.propTypes = TablePagePaginationPropTypes;
 
 export default TablePagePagination;

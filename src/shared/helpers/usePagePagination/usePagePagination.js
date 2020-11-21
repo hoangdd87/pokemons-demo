@@ -6,31 +6,31 @@ const usePagePagination = totalItems => {
   const [perPage, setPerPage] = useState(PER_PAGE_OPTIONS[0]);
   const totalPages = useMemo(()=> Math.ceil(totalItems / perPage), [totalItems, perPage]);
 
-  const handlePrevPage = () => setPage(page => page === FIRST_PAGE ? page : page - 1);
+  const gotoPrevPage = () => setPage(page => page === FIRST_PAGE ? page : page - 1);
 
-  const handleNextPage = () => setPage(page =>page === totalPages ? page : page + 1);
+  const gotoNextPage = () => setPage(page =>page === totalPages ? page : page + 1);
 
-  const handlePerPageChanged = perPage => {
+  const changePerPage = perPage => {
     setPerPage(perPage);
     setPage(FIRST_PAGE);
   };
 
-  const handleGotoLast = () => setPage(totalPages);
+  const gotoLast = () => setPage(totalPages);
 
-  const handleGotoFirst = () => setPage(FIRST_PAGE);
+  const gotoFirst = () => setPage(FIRST_PAGE);
 
-  const handleDirectPageChange = newPage => setPage(newPage);
+  const changePage = newPage => setPage(newPage);
 
   return {
     page,
     perPage,
-    handlePrevPage,
-    handleNextPage,
+    gotoPrevPage,
+    gotoNextPage,
     totalPages,
-    handlePerPageChanged,
-    handleDirectPageChange,
-    handleGotoLast,
-    handleGotoFirst,
+    changePerPage,
+    changePage,
+    gotoLast,
+    gotoFirst,
   };
 
 };

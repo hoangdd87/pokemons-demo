@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import TablePagePagination from "../../shared/components/TablePagePagination/TablePagePagination";
 import Table from '../../shared/components/Table/Table';
 import './PokemonPage.css';
+import { TablePagePaginationPropTypes } from '../../shared/components/TablePagePagination/tablePagePaginationHelpers';
+import PropTypes from 'prop-types';
 
 const columns = [
   {
@@ -41,7 +43,7 @@ const PokemonsPage = ({ pagePagination, pokemons, isLoadingPokemons }) => {
   return (
     <div>
       <TablePagePagination
-        pagePagination={ pagePagination }
+        { ... pagePagination }
       />
       <input
         placeholder="Filter on the current page..."
@@ -56,5 +58,14 @@ const PokemonsPage = ({ pagePagination, pokemons, isLoadingPokemons }) => {
     </div>
   );
 };
+
+PokemonsPage.propTypes = {
+  pagePagination: PropTypes.shape(TablePagePaginationPropTypes),
+  pokemons: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+  })).isRequired,
+  isLoadingPokemons: PropTypes.bool.isRequired
+}
 
 export default PokemonsPage;
