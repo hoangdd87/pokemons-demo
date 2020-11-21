@@ -46,7 +46,7 @@ const TablePagePagination = ({
       <select
         value={perPage}
         onChange={evt => {
-          handlePerPageChanged(evt.target.value)
+          handlePerPageChanged(parseInt(evt.target.value))
         }}
       >
         {PER_PAGE_OPTIONS.map(perPageOption => (
