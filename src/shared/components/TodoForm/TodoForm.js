@@ -60,8 +60,11 @@ const TodoForm = ({ initialValues, onSubmit, isLoading, title }) => {
 TodoForm.propTypes = {
   initialValues: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired
-  })
+    completed: PropTypes.bool.isRequired,
+  }),
+  onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  title: PropTypes.string
 };
 
 export default TodoForm;

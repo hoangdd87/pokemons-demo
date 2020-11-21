@@ -10,7 +10,10 @@ const initialValues = {
 
 const EditTodoPageConnector = () => {
   const { id } = useParams();
-  const [todo, setTodo] = useState(initialValues);
+  const [form, setForm] = useState({
+    key: 0,
+    initialValues
+  });
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     let didCancel = false;
@@ -19,7 +22,10 @@ const EditTodoPageConnector = () => {
       url: `https://jsonplaceholder.typicode.com/todos/${id}`
     }).then(response => {
       if(!didCancel) {
-        setTodo(response.data);
+        setForm(currentForm => ({
+            initialValues: response.data,
+            key: currentForm.initialValues + 1
+          }));
         setIsLoading(false);
       }
     }).catch(err => {
@@ -32,9 +38,9 @@ const EditTodoPageConnector = () => {
   }, [id])
   return (
     <TodoForm
-      initialValues={ todo }
-      key = { isLoading }
-      onSubmit={ values => console.log('values = ', values) }
+      initialValues={ form.initialValues }
+      key = { form.key }
+      onSubmit={ values => console.log('edit values = ', values) }
       title="Edit todo"
       isLoading={ isLoading }
       
