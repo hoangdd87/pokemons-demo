@@ -35,7 +35,7 @@ const TablePagePagination = ({
         <button onClick={ () => onPageChange(page + 1) }>
           {`>`}
         </button>
-        <button onClick={() => onPerPageChange(totalPages) }>
+        <button onClick={() => onPageChange(totalPages) }>
           {`>>`}
         </button>
       </div>
