@@ -57,13 +57,9 @@ const TodosPage = ({ todos, isLoadingTodos, gotoAddNewTodo, gotoEditTodo }) => {
   const {
     page,
     perPage,
-    gotoPrevPage,
-    gotoNextPage,
     totalPages,
     changePerPage,
     changePage,
-    gotoLast,
-    gotoFirst,
   } = usePagePagination(rowsFiltered.length);
   const rowsPaged = useMemo(() => rowsFiltered.slice((page-1) * perPage, (page-1) * perPage + perPage), [rowsFiltered, page, perPage]);
   const columns = useMemo(() => getColumns(textSearch, gotoEditTodo), [textSearch, gotoEditTodo]);
@@ -72,13 +68,9 @@ const TodosPage = ({ todos, isLoadingTodos, gotoAddNewTodo, gotoEditTodo }) => {
       <TablePagePagination
           page = { page }
           perPage = { perPage }
-          handleNextPage = { gotoNextPage }
-          handlePrevPage={ gotoPrevPage }
-          totalPages = { totalPages }
-          handlePerPageChanged= { changePerPage }
-          handleDirectPageChange={ changePage }
-          handleGotoLast={ gotoLast }
-          handleGotoFirst={ gotoFirst }
+          totalPages={ totalPages }
+          onPageChange={ changePage }
+          onPerPageChange={ changePerPage }
       />
       <input
         placeholder="Filter by id or title or status..."

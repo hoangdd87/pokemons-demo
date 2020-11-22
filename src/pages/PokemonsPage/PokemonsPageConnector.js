@@ -12,13 +12,9 @@ const PokemonsPageConnector = () => {
   const {
     page,
     perPage,
-    gotoPrevPage,
-    gotoNextPage,
     totalPages,
     changePerPage,
     changePage,
-    gotoLast,
-    gotoFirst
   } = usePagePagination(pokemonsCount);
 
   useEffect(() => {
@@ -66,13 +62,9 @@ const PokemonsPageConnector = () => {
       pagePagination={ {
         page,
         perPage,
-        handlePrevPage: gotoPrevPage,
-        handleNextPage: gotoNextPage,
-        handlePerPageChanged: changePerPage,
-        handleDirectPageChange: changePage,
-        handleGotoLast: gotoLast,
-        handleGotoFirst: gotoFirst,
-        totalPages
+        totalPages,
+        onPageChange: changePage,
+        onPerPageChange: changePerPage
       } }
       pokemons={ pokemons }
       isLoadingPokemons={ isLoadingPokemons }

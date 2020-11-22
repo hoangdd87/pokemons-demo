@@ -1,28 +1,24 @@
 import React from 'react';
-import {PER_PAGE_OPTIONS} from '../../helpers/usePagePagination/usePagePaginationConsts';
+import {FIRST_PAGE, PER_PAGE_OPTIONS} from '../../helpers/usePagePagination/usePagePaginationConsts';
 import './TablePagePagination.css';
 import { TablePagePaginationPropTypes } from './tablePagePaginationHelpers';
 
 const TablePagePagination = ({
     page,
     perPage,
-    handlePrevPage,
-    handleNextPage,
-    handlePerPageChanged,
-    handleDirectPageChange,
-    handleGotoLast,
-    handleGotoFirst,
-    totalPages
+    totalPages,
+    onPageChange,
+    onPerPageChange
   }) => {
 
   const pages = Array.from(Array(totalPages).keys())
   return (
     <div>
       <div>
-        <button onClick={handleGotoFirst}>
+        <button onClick={ () => onPageChange(FIRST_PAGE) }>
           {`<<`}
         </button>
-        <button onClick={handlePrevPage}>
+        <button onClick={ () => onPageChange(page - 1) }>
           {`<`}
         </button>
         {
@@ -30,23 +26,23 @@ const TablePagePagination = ({
             <button
               key={pageIndex}
               className={page === pageIndex + 1 ? 'page_active' : ''}
-              onClick={() => handleDirectPageChange(pageIndex + 1)}
+              onClick={ () => onPageChange(pageIndex + 1) }
             >
               {pageIndex + 1}
             </button>
           ))
         }
-        <button onClick={handleNextPage}>
+        <button onClick={ () => onPageChange(page + 1) }>
           {`>`}
         </button>
-        <button onClick={handleGotoLast}>
+        <button onClick={() => onPerPageChange(totalPages) }>
           {`>>`}
         </button>
       </div>
       <select
-        value={perPage}
+        value={ perPage }
         onChange={evt => {
-          handlePerPageChanged(parseInt(evt.target.value))
+          onPerPageChange(parseInt(evt.target.value))
         }}
       >
         {PER_PAGE_OPTIONS.map(perPageOption => (
